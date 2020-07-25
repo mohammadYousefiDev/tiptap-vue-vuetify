@@ -229,7 +229,7 @@ import AlignText from './tiptap-align.js';
 
 export default {
 
-  props: ['mainContent', 'EditorContent'],
+  props: ['EditorContent'],
 
   components: {
     EditorContent,
@@ -355,9 +355,9 @@ export default {
   watch: 
   {
     /**
-     * watch content1 prop to change
+     * watch content prop to change
      * after any change we can pass it to parent component (if exists)
-     * emit to parent have a space bug
+     * note: emit to parent have a space bug -- i dont know
      * you can install vuex
      * send content to state
      * then watch vuex state in parent component
@@ -372,15 +372,16 @@ export default {
       this.$store.commit("editorContent", this.content);
     },
 
-    mainContent (newValue) {
-      this.editor.setContent(newValue)
-    },
-    EditorContent(params){
+    /**
+     * this is editor content prop that pass from parent to editor component
+     */
+    EditorContent(params)
+    {
       this.editor.setContent(params)
     }
+
   },
 
-  
   methods: {
     showLinkMenu(attrs) {
       this.linkUrl = attrs.href
