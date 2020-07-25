@@ -8,21 +8,19 @@ This project is made for ease of use tiptap so you can use the elements you want
 
 supported:
 
-<ol style="padding-left: 0;list-style-position: inside;">
-  
-<li> Link </li>
-<li> Bold </li>
-<li> Headings </li>
-<li> Italic </li>
-<li> Underline </li>
-<li> Strike </li>
-<li> Lists </li>
-<li> Align </li>
-<li> Image Upload </li>
-<li> Horizontal Line </li>
-<li> Emojies </li>
-  
-</ol>
+
+1. Link
+2. Bold
+3. Headings
+4. Italic
+5. Underline
+6. Strike
+7. Lists
+8. Align
+9. Image Upload
+10. Horizontal Line
+11. Emojies
+
 
 
 # Develope
