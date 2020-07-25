@@ -151,43 +151,28 @@
         </template>
 
         <!-- image uploader dialog -->
-     <v-dialog v-model="imageUpload" max-width="700px">
+        <v-dialog v-model="imageUpload" max-width="400px">
 
           <h4 class="col-12 px-0 mt-0">
-            <v-icon class="ml-3">mdi-scale-balance</v-icon> 
-            آپلود تصویر 
-            <v-icon color="red" @click="imageUpload = !imageUpload" class="float-left" size="25">mdi-close</v-icon> 
+            <v-icon color="#000" class="mr-1" size="20">mdi-cloud-upload-outline</v-icon> 
+            Image send
+            <v-icon color="red" @click="imageUpload = !imageUpload" class="float-right" size="25">mdi-close</v-icon> 
           </h4>
 
-          <v-divider class="col-12 mb-0"></v-divider>
+          <v-divider class="col-12"></v-divider>
 
-          <v-file-input
-            v-model="files"
-            color="info"
-            label=""
-            show-size
-            placeholder="برای انتخاب تصویر کلیک نمایید"
-            prepend-icon="mdi-paperclip"
-            height="50"
-            class="imageUpload"
-            clearable
-            :loading="imageUploadLoading"
-            accept="image/*"
-            @change="changeImage"
-          >
-          </v-file-input>
+          <form ref="imageUpload" class="col-12 px-0 py-0" @submit.prevent="addImage(commands.image)" action="" autocomplete="off">
 
-        <v-alert
-          class="size-14 mt-0 px-0">
-          <p class="imageUploadWarning mb-2">
-          <v-icon size="17" color="#C2185B" class="ml-1">mdi-alert-circle-outline</v-icon>  فایل ارسالی باید حداکثر 5 مگابایت و فرمت آن jpg, png, jpeg باشد.
-          </p>
+            <v-text-field
+              label="Image Absolute URL"
+              outlined
+              v-model="imageUrl"
+              hide-details
+            ></v-text-field>
 
-          <v-btn color="info" block class="mt-4" height="50" @click="imageUp(commands.image)">
-            ارسال تصویر
-          </v-btn>
-          
-          </v-alert>
+          <v-btn type="submit" color="info" class="mt-4" height="40">Send</v-btn>
+
+          </form> 
 
         </v-dialog>
 
@@ -345,10 +330,10 @@ export default {
         }
       ],
       linkMenuIsActive: false,
-      imageUploadLoading: false,
-      files: null,
-      imageUpload: false,
       img: null,
+
+      imageUrl: '',
+      imageUpload: false
     }
   },
 
@@ -369,7 +354,8 @@ export default {
        * pass editor content to vuex state
        * and get that in parent component (watch vuex state)
        */
-      this.$store.commit("editorContent", this.content);
+
+      //this.$store.commit("editorContent", this.content);
     },
 
     /**
@@ -421,42 +407,21 @@ export default {
     },
 
     /**
-     * change image event
-     */
-    changeImage()
-    {
-      this.img = event.target.files[0];
-    },
-
-    /**
      * image upload
      */
-    imageUp(command)
+    addImage(command)
     {
-      this.imageUploadLoading = !this.imageUploadLoading;
+      if(this.imageUrl == '') return;
 
-      const data = new FormData()
+      var src = this.imageUrl;
 
-      data.append('img', this.img)
+      command({ src });
 
-      axios.post( 'api/user/uploadImageEditor', data, {
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        }
-      })
-      .then(r => 
-      {
-        var src = '../uploads/editor/'+r.data;
-        
-        command({ src });
-
-        // this.insertHTML(this.editor, '<img src="../uploads/editor/'+r.data+'" />');
-
-        this.imageUploadLoading = !this.imageUploadLoading;
-        this.imageUpload = !this.imageUpload;
-      })
+      this.imageUrl = '';
+      this.imageUpload = !this.imageUpload;
       
-    },
+    }
+
   },
 }
 </script>
@@ -469,7 +434,7 @@ export default {
 
 .ProseMirror
 {
-  height: 300px;
+  min-height: 300px;
   border: 1px solid #ccc;
   border-radius: 20px;
   outline: none;
@@ -480,6 +445,11 @@ export default {
   a
   {
     color: blue;
+  }
+
+  img
+  {
+    max-width: 100%;
   }
 }
 
