@@ -226,7 +226,7 @@ import {
 } from 'tiptap-extensions'
 
 import AlignText from './tiptap-align.js'; 
- 
+
 export default {
 
   props: ['mainContent', 'EditorContent'],
@@ -354,9 +354,9 @@ export default {
   },
 
   watch: {
-    content: function() {
+    content1: function() {
       // Emit this information to the parents component
-      this.$emit("txtContent", this.content);
+      this.$emit("txtContent", this.content1);
     },
     mainContent (newValue) {
       this.editor.setContent(newValue)
