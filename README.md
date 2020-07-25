@@ -17,3 +17,6 @@ supported:
 <li> 9. Image Upload </li>
 <li> 10. Horizontal Line </li>
 <li> 11. Emojies </li>
+
+#develope
+Please help us to complete and improve this project. Many can not easily use Tiptap and create a professional editor for their project. Thankful
