@@ -8,7 +8,8 @@ This project is made for ease of use tiptap so you can use the elements you want
 
 supported:
 
-<ol>
+<ol style="padding-left: 0;list-style-position: inside;">
+  
   <li> Link </li>
   <li> Bold </li>
   <li> Headings </li>
@@ -20,6 +21,7 @@ supported:
   <li> Image Upload </li>
   <li> Horizontal Line </li>
   <li> Emojies </li>
+  
 </ol>
 
 
