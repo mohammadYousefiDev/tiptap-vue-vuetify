@@ -1,6 +1,6 @@
 # tiptap-vue-vuetify
 
-tiptap editor that created with vuetify
+This project is made for ease of use tiptap so you can use the elements you want in the current project
 
 <h2><a href="https://mohammadyousefidev.github.io/tiptap-vue-vuetify/">DEMO</a></h2>
 
