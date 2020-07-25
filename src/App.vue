@@ -236,6 +236,12 @@ export default {
   },
   data() {
     return {
+
+      /**
+       * this is main editor object
+       * all of element must be define in 'extension' prop
+       */
+
       editor: new Editor({
         extensions: [
           new Blockquote(),
@@ -259,7 +265,22 @@ export default {
           new Strike(),
         ],
         content: '',
+        onUpdate: ({ getHTML }) => 
+        {
+          /**
+           * save new content in custom data
+           * data name must not be "content"
+           */
+          this.content1 = getHTML()
+        }
       }),
+
+      /**
+       * This data is main content of your text editor
+       * You can send to backend api
+       */
+      content1: "",
+
       linkUrl: null,
       linkMenuIsActive: false,
       emojis:[
