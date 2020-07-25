@@ -6,8 +6,7 @@ This project is made for ease of use tiptap so you can use the elements you want
 
 <h2><a href="https://mohammadyousefidev.github.io/tiptap-vue-vuetify/">DEMO</a></h2>
 
-supported:
-
+# supported Elements
 
 1. Link
 2. Bold
@@ -20,7 +19,6 @@ supported:
 9. Image Upload
 10. Horizontal Line
 11. Emojies
-
 
 
 # Develope
