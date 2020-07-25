@@ -279,9 +279,8 @@ export default {
           {
             /**
              * save new content in custom data
-             * data name must not be "content" !! created a space bug for me :D
              */
-            this.content1 = getHTML()
+            this.content = getHTML()
           }
 
         }
@@ -291,7 +290,7 @@ export default {
        * This data is main content of your text editor
        * You can send to backend api
        */
-      content1: "",
+      content: "",
 
       linkUrl: null,
       linkMenuIsActive: false,
@@ -353,11 +352,26 @@ export default {
     }
   },
 
-  watch: {
-    content1: function() {
-      // Emit this information to the parents component
-      this.$emit("txtContent", this.content1);
+  watch: 
+  {
+    /**
+     * watch content1 prop to change
+     * after any change we can pass it to parent component (if exists)
+     * emit to parent have a space bug
+     * you can install vuex
+     * send content to state
+     * then watch vuex state in parent component
+     * and insert to your data
+     */
+    content: function() 
+    {
+      /**
+       * pass editor content to vuex state
+       * and get that in parent component (watch vuex state)
+       */
+      this.$store.commit("editorContent", this.content);
     },
+
     mainContent (newValue) {
       this.editor.setContent(newValue)
     },
