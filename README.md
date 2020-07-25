@@ -10,17 +10,17 @@ supported:
 
 <ol style="padding-left: 0;list-style-position: inside;">
   
-  <li> Link </li>
-  <li> Bold </li>
-  <li> Headings </li>
-  <li> Italic </li>
-  <li> Underline </li>
-  <li> Strike </li>
-  <li> Lists </li>
-  <li> Align </li>
-  <li> Image Upload </li>
-  <li> Horizontal Line </li>
-  <li> Emojies </li>
+<li> Link </li>
+<li> Bold </li>
+<li> Headings </li>
+<li> Italic </li>
+<li> Underline </li>
+<li> Strike </li>
+<li> Lists </li>
+<li> Align </li>
+<li> Image Upload </li>
+<li> Horizontal Line </li>
+<li> Emojies </li>
   
 </ol>
 
