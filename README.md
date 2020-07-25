@@ -8,17 +8,20 @@ This project is made for ease of use tiptap so you can use the elements you want
 
 supported:
 
-<li> 1. Link </li>
-<li> 2. Bold </li>
-<li> 3. Headings </li>
-<li> 4. Italic </li>
-<li> 5. Underline </li>
-<li> 6. Strike </li>
-<li> 7. Lists </li>
-<li> 8. Align </li>
-<li> 9. Image Upload </li>
-<li> 10. Horizontal Line </li>
-<li> 11. Emojies </li>
+<ol>
+  <li> Link </li>
+  <li> Bold </li>
+  <li> Headings </li>
+  <li> Italic </li>
+  <li> Underline </li>
+  <li> Strike </li>
+  <li> Lists </li>
+  <li> Align </li>
+  <li> Image Upload </li>
+  <li> Horizontal Line </li>
+  <li> Emojies </li>
+</ol>
+
 
 # Develope
 Please help us to complete and improve this project. Many can not easily use Tiptap and create a professional editor for their project. Thankful
