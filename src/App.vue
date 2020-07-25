@@ -225,7 +225,8 @@ import {
   Underline
 } from 'tiptap-extensions'
 
-import AlignText from './tiptap-align.js';  
+import AlignText from './tiptap-align.js'; 
+ 
 export default {
 
   props: ['mainContent', 'EditorContent'],
@@ -239,41 +240,52 @@ export default {
 
       /**
        * this is main editor object
-       * all of element must be define in 'extension' prop
+       * elements must be define in 'extension' prop of this object
        */
 
-      editor: new Editor({
-        extensions: [
-          new Blockquote(),
-          new BulletList(),
-          new CodeBlock(),
-          new Underline(),
-          new HardBreak(),
-          new Heading({ levels: [1, 2, 3] }),
-          new ListItem(),
-          new OrderedList(),
-          new HorizontalRule(),
-          new TodoItem(),
-          new TodoList(),
-          new Link(),
-          new Image(),
-          new Bold(),
-          new Code(),
-          new Italic(),
-          new History(),
-          new AlignText(),
-          new Strike(),
-        ],
-        content: '',
-        onUpdate: ({ getHTML }) => 
+      editor: new Editor(
         {
+          extensions: [
+            new Blockquote(),
+            new BulletList(),
+            new CodeBlock(),
+            new Underline(),
+            new HardBreak(),
+            new Heading({ levels: [1, 2, 3] }),
+            new ListItem(),
+            new OrderedList(),
+            new HorizontalRule(),
+            new TodoItem(),
+            new TodoList(),
+            new Link(),
+            new Image(),
+            new Bold(),
+            new Code(),
+            new Italic(),
+            new History(),
+            new AlignText(),
+            new Strike(),
+          ],
+
           /**
-           * save new content in custom data
-           * data name must not be "content"
+           * this is default content of editor
            */
-          this.content1 = getHTML()
+          content: '',
+
+          /**
+           * this prop gets updated editor content
+           */
+          onUpdate: ({ getHTML }) => 
+          {
+            /**
+             * save new content in custom data
+             * data name must not be "content" !! created a space bug for me :D
+             */
+            this.content1 = getHTML()
+          }
+
         }
-      }),
+      ),
 
       /**
        * This data is main content of your text editor
