@@ -1,8 +1,5 @@
 # tiptap-vue-vuetify
 
-[![Build Status]()]()
-
-
 tiptap editor that created with vuetify
 
 <h2><a href="https://mohammadyousefidev.github.io/tiptap-vue-vuetify/">DEMO</a></h2>
