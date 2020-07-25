@@ -1,4 +1,4 @@
-# tiptap-vue-vuetify
+# Tiptap-vue-vuetify
 
 This project is made for ease of use tiptap so you can use the elements you want in the current project
 
@@ -18,5 +18,5 @@ supported:
 <li> 10. Horizontal Line </li>
 <li> 11. Emojies </li>
 
-# develope
+# Develope
 Please help us to complete and improve this project. Many can not easily use Tiptap and create a professional editor for their project. Thankful
