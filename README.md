@@ -1,6 +1,8 @@
 # Tiptap-vue-vuetify
 
-This project is made for ease of use tiptap so you can use the elements you want in the current project
+This project is made for ease of use tiptap so you can use the elements you want in the current project.
+
+This repository is not a package to download. Instead, we tried to teach you how to use and implement the elements of the TipTap editor.
 
 <h2><a href="https://mohammadyousefidev.github.io/tiptap-vue-vuetify/">DEMO</a></h2>
 
