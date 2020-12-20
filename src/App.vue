@@ -15,14 +15,6 @@
         </form>
 
         <template v-else>
-          <button
-            class="menububble__button"
-            @click="showLinkMenu(getMarkAttrs('link'))"
-            :class="{ 'is-active': isActive.link() }"
-          >
-            <!-- <span>{{ isActive.link() ? 'Update Link' : 'Add Link'}}</span> -->
-            <v-icon size="22" color="#000" class="deforme">mdi-link-variant-plus</v-icon>
-          </button>
 
           <button
             class="menubar__button"
@@ -97,9 +89,9 @@
           </button>
 
           <button class="menubar__button"
-              :class="{ 'is-active': editor.activeMarkAttrs.aligntext.align === 'right' }"
-              @click.prevent="commands.aligntext({ align: 'right' })">
-              <v-icon size="20" color="#000" class="deforme">mdi-format-align-right</v-icon>
+              :class="{ 'is-active': editor.activeMarkAttrs.aligntext.align === 'left' }"
+              @click.prevent="commands.aligntext({ align: 'left' })">
+              <v-icon size="20" color="#000" class="deforme">mdi-format-align-left</v-icon>
           </button>
 
           <button class="menubar__button"
@@ -109,9 +101,9 @@
           </button>
           
           <button class="menubar__button"
-              :class="{ 'is-active': editor.activeMarkAttrs.aligntext.align === 'left' }"
-              @click.prevent="commands.aligntext({ align: 'left' })">
-              <v-icon size="20" color="#000" class="deforme">mdi-format-align-left</v-icon>
+              :class="{ 'is-active': editor.activeMarkAttrs.aligntext.align === 'right' }"
+              @click.prevent="commands.aligntext({ align: 'right' })">
+              <v-icon size="20" color="#000" class="deforme">mdi-format-align-right</v-icon>
           </button>
 
           <button class="menubar__button" @click.prevent="imageUpload = !imageUpload">
@@ -148,6 +140,39 @@
             </div>
           </v-menu>
 
+          <button
+            class="menububble__button"
+            @click.prevent="showLinkModal(getMarkAttrs('link'))"
+            :class="{ 'is-active': isActive.link() }"
+          >
+            <v-icon size="19" color="#000" class="deforme">mdi-link-variant-plus</v-icon>
+          </button>
+
+          <v-menu
+            :close-on-content-click="true"
+            :nudge-width="250"
+            content-class="emoji_select"
+            left
+            :offset-y="true"
+          >
+            <template v-slot:activator="{ on }">
+              <button class="menubar__button" type="button" v-on="on">
+                <v-icon size="21" color="#000" class="deforme">mdi-palette</v-icon>
+              </button>
+            </template>
+
+            <div class="icon_pack text-center">
+              <span
+                v-for="(color, i) in colors"
+                :key="i"
+                class="pointer"
+                :class="{ 'is-active1': isActive.textColor({ level: 'text-'+color.name }) }"
+                @click.prevent="commands.textColor({ level: 'text-'+color.name })"
+              ><v-icon :color="color.color">mdi-circle</v-icon></span>
+
+            </div>
+          </v-menu>
+
         </template>
 
         <!-- image uploader dialog -->
@@ -174,6 +199,33 @@
 
           </form> 
 
+        </v-dialog>
+
+        <v-dialog width="400" v-model="linkModal">
+          <header class="pa-4 font-weight-bold">Add\edit link
+            <v-icon class="float-right" color="error" @click="linkModal = !linkModal">mdi-close</v-icon>
+          </header>
+          <v-divider></v-divider>
+          <div class="pa-4 pt-7 texam">
+            <v-form autocomplete="off">
+              <v-text-field
+                label="link"
+                height="50"
+                v-model="linkUrl"
+                hide-details
+                class="mb-5 size14"
+                outlined
+              ></v-text-field>
+
+              <v-checkbox
+                v-model="linkNewTab"
+                label="Open in new tab"
+                hide-details
+              ></v-checkbox>
+            </v-form>
+
+            <v-btn @click="sendLink(commands.link)" color="info" class="mt-4">Add link</v-btn>
+          </div>
         </v-dialog>
 
       </div>
@@ -211,6 +263,8 @@ import {
 } from 'tiptap-extensions'
 
 import AlignText from './tiptap-align.js'; 
+import CustomLink from './customLink';
+import TextColor from './textColor';
 
 export default {
 
@@ -222,6 +276,9 @@ export default {
   },
   data() {
     return {
+      linkNewTab: false,
+      linkUrl: null,
+      linkModal: false,
 
       /**
        * this is main editor object
@@ -234,6 +291,7 @@ export default {
             new Blockquote(),
             new BulletList(),
             new CodeBlock(),
+            new TextColor(),
             new Underline(),
             new HardBreak(),
             new Heading({ levels: [1, 2, 3] }),
@@ -242,7 +300,7 @@ export default {
             new HorizontalRule(),
             new TodoItem(),
             new TodoList(),
-            new Link(),
+            new CustomLink(),
             new Image(),
             new Bold(),
             new Code(),
@@ -255,7 +313,7 @@ export default {
           /**
            * this is default content of editor
            */
-          content: '',
+          content: '<p><strong>Bold</strong></p><h1>Heading1</h1><h2>Heading2</h2><h3>Heading3</h3><p><em>Italic</em></p><p><u>Underline</u></p><p><s>Strike</s></p><p>Unordered list:</p><ul><li><p>option1</p></li><li><p>option2</p></li></ul><p></p><p>Ordered list</p><ol><li><p>option1</p></li><li><p>option2</p></li></ol><p></p><p>left align</p><p><span style="text-align: center; display: block">center align</span></p><p><span style="text-align: right; display: block">right align</span></p><p></p><p><img src="https://vuetech.ir/_nuxt/img/services.e3dbeef.png"></p><h2></h2><hr><p></p><p>😉😍🙄😑</p><p><a href="https://vuetech.ir" rel="noopener noreferrer nofollow">Link without target</a></p><p><a href="https://vuetech.ir" target="_blank" rel="noopener noreferrer nofollow">Link with target _blank</a></p><p></p><p><span class="custom-style text-success">Green text</span></p><p><span class="custom-style text-primary">Blue text</span></p>',
 
           /**
            * this prop gets updated editor content
@@ -275,59 +333,35 @@ export default {
        * This data is main content of your text editor
        * You can send to backend api
        */
-      content: "",
+      content: '',
 
       linkUrl: null,
       linkMenuIsActive: false,
       emojis:[
-        {
-          text: '😃'
-        },
-        {
-          text: '😉'
-        },
-        {
-          text: '😋'
-        },
-        {
-          text: '😎'
-        },
-        {
-          text: '😍'
-        },
-        {
-          text: '🙄'
-        },
-        {
-          text: '😑'
-        },
-        {
-          text: '🤔'
-        },
-        {
-          text: '😥'
-        },
-        {
-          text: '🤐'
-        },
-        {
-          text: '😫'
-        },
-        {
-          text: '😲'
-        },
-        {
-          text: '😭'
-        },
-        {
-          text: '😡'
-        },
-        {
-          text: '😬'
-        },
-        {
-          text: '😴'
-        }
+        { text: '😃' },
+        { text: '😉' },
+        { text: '😋' },
+        { text: '😎' },
+        { text: '😍' },
+        { text: '🙄' },
+        { text: '😑' },
+        { text: '🤔' },
+        { text: '😥' },
+        { text: '🤐' },
+        { text: '😫' },
+        { text: '😲' },
+        { text: '😭' },
+        { text: '😡' },
+        { text: '😬' },
+        { text: '😴' }
+      ],
+      colors: [
+        {name: 'primary', color: '#007bff'}, 
+        {name: 'success', color: '#28a745'},
+        {name: 'warning', color: '#ffc107'}, 
+        {name: 'danger', color: '#dc3545'},
+        {name: 'info', color: '#17a2b8'},
+        {name: 'dark', color: '#343a40'}
       ],
       linkMenuIsActive: false,
       img: null,
@@ -368,21 +402,36 @@ export default {
 
   },
 
-  methods: {
-    showLinkMenu(attrs) {
-      this.linkUrl = attrs.href
-      this.linkMenuIsActive = true
-      this.$nextTick(() => {
-        this.$refs.linkInput.focus()
-      })
+  methods: 
+  {
+    showLinkModal(attr)
+    {
+      const { selection, state } = this.editor;
+      const { from, to } = selection;
+      const text = state.doc.textBetween(from, to, ' ');
+
+      if(text=='') return;
+
+      this.linkModal = true;
+
+      if(attr.target == '_blank'){
+        this.linkNewTab = true;
+      }
+
+      this.linkUrl = attr.href
     },
-    hideLinkMenu() {
-      this.linkUrl = null
-      this.linkMenuIsActive = false
-    },
-    setLinkUrl(command, url) {
-      command({ href: url })
-      this.hideLinkMenu()
+
+    sendLink(command)
+    {
+      if(this.linkNewTab)
+      {
+        command({ href: this.linkUrl, target: '_blank' });
+      }
+      else{
+        command({ href: this.linkUrl});
+      }
+      
+      this.linkModal = false;
     },
 
     elementFromString(value) {
@@ -434,13 +483,14 @@ export default {
 
 .ProseMirror
 {
-  min-height: 300px;
+  height: 500px;
   border: 1px solid #ccc;
   border-radius: 20px;
   outline: none;
   padding: 21px;
   font-size: 23px;
   font-family: sans-serif;
+  overflow-y: scroll;
 
   a
   {
@@ -450,6 +500,10 @@ export default {
   img
   {
     max-width: 100%;
+  }
+
+  ul, ol{
+    padding-left: 60px;
   }
 }
 
@@ -507,5 +561,33 @@ button.is-active{
   .icon_pack_span{
     cursor: pointer;
   }
+}
+
+.pointer{
+  cursor: pointer;
+}
+
+.text-dark {
+  color: #343a40!important;
+}
+
+.text-primary {
+  color: #007bff!important;
+}
+
+.text-success {
+  color: #28a745!important;
+}
+
+.text-warning {
+  color: #ffc107!important;
+}
+
+.text-danger {
+  color: #dc3545!important;
+}
+
+.text-info {
+  color: #17a2b8!important;
 }
 </style>
