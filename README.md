@@ -1,6 +1,7 @@
 # Tiptap-vue-vuetify
 <span><img src="https://img.shields.io/npm/l/tiptap-vuetify.svg" alt="License"></span>
 <span><img alt="codebeat badge" src="https://badgen.net/badge/code%20style/standard/f2a" /></span>
+<span><img alt="codebeat badge" src="https://img.shields.io/badge/size-6.58%20kB-44cc11.svg" /></span>
 
 This project is made for ease of use tiptap so you can use the elements you want in the current project.
 
