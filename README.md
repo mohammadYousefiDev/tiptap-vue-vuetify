@@ -8,8 +8,7 @@ This project is made for ease of use tiptap so you can use the elements you want
 
 # New features
 
-1. Add link with/without target
-2. Add color to text (bootstrap main colors)
+1. new headings added (h4,h5,h6) and paragraph
 
 # Supported Elements
 
@@ -25,6 +24,8 @@ This project is made for ease of use tiptap so you can use the elements you want
 10. Horizontal Line
 11. Emojies
 12. Text color
+13. Add link with/without target
+14. Add color to text (bootstrap main colors)
 
 
 # Develope

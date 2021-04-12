@@ -24,29 +24,80 @@
             <v-icon size="26" color="#000">mdi-format-bold</v-icon>
           </button>
 
-          <button
-              class="menubar__button"
-              :class="{ 'is-active': isActive.heading({ level: 1 }) }"
-              @click.prevent="commands.heading({ level: 1 })"
-            >
-              <v-icon size="24" color="#000" class="deforme">mdi-format-header-1</v-icon>
-            </button>
+          <v-menu
+            :close-on-content-click="true"
+            :nudge-width="130"
+            content-class="emoji_select"
+            right
+            block
+            :offset-y="true"
+          >
+            <template v-slot:activator="{ on }">
+              <button block class="menubar__button" type="button" v-on="on">
+                <v-icon size="26" color="#000" class="deforme">mdi-format-header-increase</v-icon>
+              </button>
+            </template>
 
-            <button
-              class="menubar__button"
-              :class="{ 'is-active': isActive.heading({ level: 2 }) }"
-              @click.prevent="commands.heading({ level: 2 })"
-            >
-              <v-icon size="24" color="#000" class="deforme">mdi-format-header-2</v-icon>
-            </button>
+            <div class="icon_pack text-center menubar__button2">
 
-            <button
-              class="menubar__button"
-              :class="{ 'is-active': isActive.heading({ level: 3 }) }"
-              @click.prevent="commands.heading({ level: 3 })"
-            >
-              <v-icon size="24" color="#000" class="deforme">mdi-format-header-3</v-icon>
-            </button>
+              <button
+                class="menubar__button"
+                :class="{ 'is-active': isActive.paragraph() }"
+                @click.prevent="commands.paragraph"
+              >
+                <span class="pl-4">Paragraph</span>
+              </button>
+              
+              <button
+                class="menubar__button heading1"
+                :class="{ 'is-active': isActive.heading({ level: 1 }) }"
+                @click.prevent="commands.heading({ level: 1 })"
+              >
+                <span class="pl-4">Heading 1</span>
+              </button> <br />
+
+              <button
+                class="menubar__button heading2"
+                :class="{ 'is-active': isActive.heading({ level: 2 }) }"
+                @click.prevent="commands.heading({ level: 2 })"
+              >
+                <span class="pl-4">Heading 2</span>
+              </button> <br />
+
+              <button
+                class="menubar__button heading3"
+                :class="{ 'is-active': isActive.heading({ level: 3 }) }"
+                @click.prevent="commands.heading({ level: 3 })"
+              >
+                <span class="pl-4">Heading 3</span>
+              </button> <br />
+
+              <button
+                class="menubar__button heading4"
+                :class="{ 'is-active': isActive.heading({ level: 4 }) }"
+                @click.prevent="commands.heading({ level: 4 })"
+              >
+                <span class="pl-4">Heading 4</span>
+              </button> <br />
+
+              <button
+                class="menubar__button heading5"
+                :class="{ 'is-active': isActive.heading({ level: 5 }) }"
+                @click.prevent="commands.heading({ level: 5 })"
+              >
+                <span class="pl-4">Heading 5</span>
+              </button> <br />
+
+              <button
+                class="menubar__button heading6"
+                :class="{ 'is-active': isActive.heading({ level: 6 }) }"
+                @click.prevent="commands.heading({ level: 6 })"
+              >
+                <span class="pl-4">Heading 6</span>
+              </button>
+
+            </div>
+          </v-menu>
 
           <button
             class="menubar__button"
@@ -256,15 +307,15 @@ import {
   Bold,
   Code,
   Italic,
-  Link,
   Image,
   History,
-  Underline
+  Underline,
 } from 'tiptap-extensions'
 
 import AlignText from './tiptap-align.js'; 
 import CustomLink from './customLink';
 import TextColor from './textColor';
+import Paragraph from './textColor';
 
 export default {
 
@@ -294,13 +345,14 @@ export default {
             new TextColor(),
             new Underline(),
             new HardBreak(),
-            new Heading({ levels: [1, 2, 3] }),
+            new Heading({ levels: [1, 2, 3, 4, 5, 6] }),
             new ListItem(),
             new OrderedList(),
             new HorizontalRule(),
             new TodoItem(),
             new TodoList(),
             new CustomLink(),
+            new Paragraph(),
             new Image(),
             new Bold(),
             new Code(),
@@ -313,7 +365,7 @@ export default {
           /**
            * this is default content of editor
            */
-          content: '<p><strong>Bold</strong></p><h1>Heading1</h1><h2>Heading2</h2><h3>Heading3</h3><p><em>Italic</em></p><p><u>Underline</u></p><p><s>Strike</s></p><p>Unordered list:</p><ul><li><p>option1</p></li><li><p>option2</p></li></ul><p></p><p>Ordered list</p><ol><li><p>option1</p></li><li><p>option2</p></li></ol><p></p><p>left align</p><p><span style="text-align: center; display: block">center align</span></p><p><span style="text-align: right; display: block">right align</span></p><p></p><p><img src="https://vuetech.ir/_nuxt/img/services.e3dbeef.png"></p><h2></h2><hr><p></p><p>😉😍🙄😑</p><p><a href="https://vuetech.ir" rel="noopener noreferrer nofollow">Link without target</a></p><p><a href="https://vuetech.ir" target="_blank" rel="noopener noreferrer nofollow">Link with target _blank</a></p><p></p><p><span class="custom-style text-success">Green text</span></p><p><span class="custom-style text-primary">Blue text</span></p>',
+          content: '<p>normal text<br/><strong>Bold</strong></p><h1>Heading1</h1><h2>Heading2</h2><h3>Heading3</h3><p><em>Italic</em></p><p><u>Underline</u></p><p><s>Strike</s></p><p>Unordered list:</p><ul><li><p>option1</p></li><li><p>option2</p></li></ul><p></p><p>Ordered list</p><ol><li><p>option1</p></li><li><p>option2</p></li></ol><p></p><p>left align</p><p><span style="text-align: center; display: block">center align</span></p><p><span style="text-align: right; display: block">right align</span></p><p></p><p><img src="https://cdn.vuetifyjs.com/docs/images/logos/vuetify-logo-light-text.svg"></p><h2></h2><hr><p></p><p>😉😍🙄😑</p><p><a href="https://github.com/mohammadYousefiDev" rel="noopener noreferrer nofollow">Link without target</a></p><p><a href="https://github.com/mohammadYousefiDev" target="_blank" rel="noopener noreferrer nofollow">Link with target _blank</a></p><p></p><p><span class="custom-style text-success">Green text</span></p><p><span class="custom-style text-primary">Blue text</span></p>',
 
           /**
            * this prop gets updated editor content
@@ -410,7 +462,10 @@ export default {
       const { from, to } = selection;
       const text = state.doc.textBetween(from, to, ' ');
 
-      if(text=='') return;
+      if(text==''){
+        alert('Please select some text');
+        return;
+      }
 
       this.linkModal = true;
 
@@ -534,6 +589,37 @@ export default {
   margin-left: 7px;
   border: 1px solid #fafafa;
   padding: 2px;
+}
+
+.menubar__button2 button {
+  width: 100%;
+  margin: 0;
+  text-align: left;
+  font-weight: bold;
+}
+
+.menubar__button2 .heading1 {
+  font-size: 32px;
+}
+
+.menubar__button2 .heading2 {
+  font-size: 28px;
+}
+
+.menubar__button2 .heading3 {
+  font-size: 24px;
+}
+
+.menubar__button2 .heading4 {
+  font-size: 20px;
+}
+
+.menubar__button2 .heading5 {
+  font-size: 16px;
+}
+
+.menubar__button2 .heading6 {
+  font-size: 12px;
 }
 
 .linkam
