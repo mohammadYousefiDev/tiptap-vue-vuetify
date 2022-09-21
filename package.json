@@ -12,7 +12,7 @@
     "tiptap": "^1.29.1",
     "tiptap-extensions": "^1.31.1",
     "vue": "^2.6.11",
-    "vuetify": "^2.3.6"
+    "vuetify": "^2.6.10"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.4.0",
